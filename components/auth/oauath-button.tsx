@@ -1,11 +1,28 @@
 'use client';
 
+import { signIn } from 'next-auth/react';
+import { useState } from 'react';
 import { FaChrome, FaGithub } from 'react-icons/fa';
+import Loader from '../loader/Loader';
+
+
 
 const OauthButtons = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleLogin = () => {
+    setLoading(true);
+    signIn('google', {redirect: true, callbackUrl: '/sync'});
+  };
+
   return (
     <div className="mt-10 space-y-4">
-      <OAuthButton icon={<FaChrome size={20} />} label="Continue with Google" />
+      <OAuthButton
+        onClick={handleLogin}
+        icon={<FaChrome size={20} />}
+        label="Continue with Google"
+        loading={loading}
+      />
 
       <OAuthButton icon={<FaGithub size={20} />} label="Continue with GitHub" />
     </div>
@@ -15,13 +32,21 @@ const OauthButtons = () => {
 function OAuthButton({
   icon,
   label,
+  onClick,
+  loading,
 }: {
   icon: React.ReactNode;
   label: string;
+  onClick?: () => void;
+  loading?: boolean;
 }) {
   return (
-    <button
-      className="
+    <>
+      {loading ? (
+        <Loader textArea={'Logging In.....'} />
+      ) : (
+        <button
+          className="
         group
         relative
         flex
@@ -34,6 +59,7 @@ function OAuthButton({
         border
         border-white/10
         bg-white/4
+        cursor-pointer
         px-5
         py-4
         text-white
@@ -43,11 +69,12 @@ function OAuthButton({
         hover:border-white/20
         hover:bg-white/[0.07]
       "
-    >
-      {/* Sweep Light */}
+          onClick={onClick}
+        >
+          {/* Sweep Light */}
 
-      <div
-        className="
+          <div
+            className="
           absolute
           -left-full
           top-0
@@ -62,12 +89,14 @@ function OAuthButton({
           duration-1000
           group-hover:left-[150%]
         "
-      />
+          />
 
-      <span>{icon}</span>
+          <span>{icon}</span>
 
-      <span className="font-medium">{label}</span>
-    </button>
+          <span className="font-medium">{label}</span>
+        </button>
+      )}
+    </>
   );
 }
 
