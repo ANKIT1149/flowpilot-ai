@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { FaChrome, FaGithub } from 'react-icons/fa';
 import Loader from '../loader/Loader';
 
-
-
 const OauthButtons = () => {
   const [loading, setLoading] = useState<boolean>(false);
 

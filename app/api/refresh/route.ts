@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { db } from '@/src/db';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import { GenerateAccessToken } from '@/utils/TokenGeneration';
 
 export async function POST(req: NextRequest) {
@@ -23,15 +23,15 @@ export async function POST(req: NextRequest) {
     const verifyToken = jwt.verify(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET!
-    ) as {userId: string};
+    ) as { userId: string };
 
-    console.log(verifyToken)
+    console.log(verifyToken);
 
     const fetchToken = await db.query.refreshTokens.findFirst({
       where: (token, { eq }) => eq(token.userId, verifyToken.userId),
     });
 
-    console.log(fetchToken)
+    console.log(fetchToken);
 
     if (!fetchToken) {
       return NextResponse.json(
@@ -42,35 +42,38 @@ export async function POST(req: NextRequest) {
         },
         { status: 400 }
       );
-      }
-      
-      const compare = bcrypt.compareSync(refreshToken, fetchToken.token);
+    }
 
-      if (compare === true) {
-          const accessToken = GenerateAccessToken(fetchToken.userId as string);
-          const res =  NextResponse.json({
-            success: true,
-            token: accessToken
-          })
+    const compare = bcrypt.compareSync(refreshToken, fetchToken.token);
+    console.log(compare)
+    if (compare === true) {
+      const accessToken = GenerateAccessToken(fetchToken.userId as string);
+      const res = NextResponse.json({
+        success: true,
+        token: accessToken,
+      });
 
-          res.cookies.set('accessToken', accessToken, {
-              httpOnly: true,
-              secure: process.env.NODE_ENV === 'production',
-              sameSite: 'lax',
-              maxAge: 15 * 60,
-              path: "/"
-          })
-          return res;
-      }
+      res.cookies.set('accessToken', accessToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 15 * 60,
+        path: '/',
+      });
 
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Failed to generate access token',
-          error: 'Refresh token does not match.',
-        },
-        { status: 400 }
-      );
+      console.log('Access token generated and set in cookie:', accessToken);
+      console.log(req.cookies.getAll());
+      return res;
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Failed to generate access token',
+        error: 'Refresh token does not match.',
+      },
+      { status: 400 }
+    );
   } catch (error) {
     console.error('Refresh token error:', error);
     return NextResponse.json(

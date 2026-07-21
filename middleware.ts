@@ -1,33 +1,45 @@
+// Add this at the top of your middleware file
+export const runtime = 'nodejs';
+
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import axios from 'axios';
 
 export async function middleware(request: NextRequest) {
-  const accessToken = request.cookies.get('accessToken')?.value as string;
-  try {
-    jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET!);
+  const accessToken = request.cookies.get('accessToken')?.value;
 
-    return NextResponse.next();
-  } catch {
+  if (accessToken) {
     try {
-      const refreshResponse = await axios.post(
-        `${request.nextUrl.origin}/api/refresh`,
-        {}, // request body
-        {
-          headers: {
-            cookie: request.headers.get('cookie') || '',
-          },
-        }
-      );
-
-      if (refreshResponse.status === 400) {
-        return NextResponse.redirect(new URL('/login', request.url));
-      }
-
+      jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET!);
       return NextResponse.next();
     } catch {
+      
+    }
+  }
+
+  try {
+    const refreshResponse = await fetch(`${request.nextUrl.origin}/api/refresh`, {
+      method: 'POST',
+      headers: {
+        cookie: request.headers.get('cookie') || '',
+      },
+    });
+
+    if (!refreshResponse.ok) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
+
+    const setCookieHeader = refreshResponse.headers.get('set-cookie');
+
+    const response = NextResponse.next();
+
+    if (setCookieHeader) {
+      response.headers.set('set-cookie', setCookieHeader);
+    }
+
+    return response;
+  } catch (error) {
+    console.error('Middleware refresh error:', error);
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 }
 
