@@ -40,7 +40,7 @@ export function NavbarLink({ item }: NavbarLinkProps) {
 
           isActive
             ? "text-white"
-            : "text-zinc-400 hover:text-white"
+            : "text-zinc-300 hover:text-white"
         )}
       >
         {isActive && (

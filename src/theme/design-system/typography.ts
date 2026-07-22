@@ -11,16 +11,23 @@ export const typography = {
 
   label: 'text-sm font-medium',
 
-  navLink: 'text-sm font-medium tracking-tight',
+  navLink: 'text-md font-medium font-serif tracking-tight',
 
-  search: 'text-sm font-medium',
+  search: 'text-lg font-medium font-serif font-semibold',
 
   shortcut: 'text-xs font-medium',
 
   badge: 'text-xs font-semibold',
 
   credits: {
-    value: 'text-sm font-semibold',
-    label: 'text-xs font-medium uppercase tracking-wide',
+    value: 'text-md font-semibold',
+    label:
+      'text-xs font-medium uppercase tracking-wide font-serif font-semibold',
+  },
+
+  hero: {
+    title:
+      'text-5xl font-bold tracking-tight leading-[1.05] sm:text-6xl lg:text-7xl',
+    description: 'text-lg leading-8 text-zinc-400 sm:text-xl',
   },
 } as const;
