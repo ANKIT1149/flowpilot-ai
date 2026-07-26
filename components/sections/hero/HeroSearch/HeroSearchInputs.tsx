@@ -1,20 +1,14 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link2 } from 'lucide-react';
 import { InputPlaceholder } from './HeroSearchPlaceHolder';
 import { InputField } from './HeroSearchField';
 import { InputSpotlight } from './InputSpotlight';
 import { useMotionValue } from 'framer-motion';
+import { URLInterface } from '@/interface/URLInterface';
 
-// import { InputField } from "./InputField";
-// import { InputClipboard } from "./InputClipboard";
-// import { InputValidation } from "./InputValidation";
-// import { InputClear } from "./InputClear";
-// import { InputSpotlight } from "./InputSpotlight";
-
-export function HeroSearchInput() {
-  const [value, setValue] = useState('');
+export function HeroSearchInput({value, SetUrlValue}: URLInterface) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const mouseX = useMotionValue(0);
@@ -32,10 +26,7 @@ export function HeroSearchInput() {
       onMouseMove={handleMouseMove}
       className="relative flex flex-1 cursor-text items-center"
     >
-      <InputSpotlight
-        mouseX={mouseX}
-        mouseY={mouseY}
-      />
+      <InputSpotlight mouseX={mouseX} mouseY={mouseY} />
 
       {/* Icon */}
       <div className="relative z-20 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
@@ -49,17 +40,8 @@ export function HeroSearchInput() {
       >
         <InputPlaceholder value={value} />
 
-        <InputField ref={inputRef} value={value} onChange={setValue} />
+        <InputField ref={inputRef} value={value} SetUrlValue={SetUrlValue} />
       </div>
-
-      {/* <InputClipboard />
-
-      <InputValidation value={value} /> */}
-
-      {/* <InputClear
-        value={value}
-        onClear={() => setValue("")}
-      /> */}
     </div>
   );
 }

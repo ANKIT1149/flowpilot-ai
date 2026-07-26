@@ -22,7 +22,7 @@ export default function Loader({textArea}: {textArea: string}) {
         <div className="absolute w-12 h-12 rounded-full bg-white/10 blur-md animate-pulse" />
 
         {/* Center dot */}
-        <div className="absolute w-4 h-4 rounded-full bg-white shadow-lg shadow-white/40" />
+        <div className="absolute w-4 h-4 rounded-full bg-amber-700 shadow-lg shadow-white/40" />
       </motion.div>
 
       {/* Loading text */}
@@ -30,7 +30,7 @@ export default function Loader({textArea}: {textArea: string}) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="absolute mt-44 text-white/70 text-sm tracking-widest"
+        className="absolute mt-44 text-white text-2xl font-serif font-semibold tracking-widest"
       >
         {textArea}
       </motion.div>

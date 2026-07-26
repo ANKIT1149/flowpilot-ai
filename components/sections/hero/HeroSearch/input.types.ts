@@ -4,7 +4,7 @@ export interface InputPlaceholderProps {
 
 export interface InputFieldProps {
   value: string;
-  onChange: (value: string) => void;
+  SetUrlValue: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus?: () => void;
   onBlur?: () => void;
 }

@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import type { InputFieldProps } from "./input.types";
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ value, onChange, onFocus, onBlur }, ref) => {
+  ({ value, SetUrlValue, onFocus, onBlur }, ref) => {
     return (
       <input
         ref={ref}
@@ -18,7 +18,7 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
         autoCapitalize="off"
         spellCheck={false}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={SetUrlValue}
         onFocus={onFocus}
         onBlur={onBlur}
         placeholder=""

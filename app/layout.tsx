@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import NextAuthProvider from './SessionProvider';
-import { Toaster } from "react-hot-toast";
+import { Toaster } from 'react-hot-toast';
 import { Navbar } from '@/components/layout/navbar';
 
 const geistSans = Geist({
@@ -33,7 +33,55 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Navbar />
         <NextAuthProvider>{children}</NextAuthProvider>
-        <Toaster />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={12}
+          containerStyle={{
+            top: 24,
+          }}
+          toastOptions={{
+            duration: 4000,
+
+            style: {
+              background: 'rgba(10, 15, 25, 0.78)',
+              color: '#ffffff',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: '20px',
+              backdropFilter: 'blur(22px)',
+              WebkitBackdropFilter: 'blur(22px)',
+              padding: '16px 20px',
+              minWidth: '360px',
+
+              boxShadow: `
+                0 20px 40px rgba(0,0,0,.35),
+                0 0 0 1px rgba(255,255,255,.03) inset,
+                0 0 35px rgba(34,211,238,.12)
+              `,
+            },
+
+            success: {
+              iconTheme: {
+                primary: '#22c55e',
+                secondary: '#ffffff',
+              },
+            },
+
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#ffffff',
+              },
+            },
+
+            loading: {
+              iconTheme: {
+                primary: '#22d3ee',
+                secondary: '#ffffff',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
