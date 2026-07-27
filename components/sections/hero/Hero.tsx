@@ -13,7 +13,7 @@ export function Hero({ className }: HeroProps) {
   return (
     <section
       className={cn(
-        'relative flex min-h-[calc(100vh-72px)] items-center justify-center px-6 pt-0 pb-24',
+        'relative flex min-h-[calc(100vh-72px)] items-center justify-center px-6 pt-0 pb-0',
         className
       )}
     >
