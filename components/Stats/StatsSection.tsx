@@ -36,7 +36,7 @@ const item: Variants = {
 
 export function StatsSection() {
   return (
-    <section className="relative overflow-hidden py-25">
+    <section className="relative overflow-hidden py-10">
      
       <FloatingParticles />
 

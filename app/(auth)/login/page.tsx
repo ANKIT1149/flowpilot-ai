@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import LoginPage from "@/components/auth/login-page";
 
 

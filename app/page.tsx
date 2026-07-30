@@ -1,6 +1,7 @@
 'use client';
 import { LandingBackground } from '@/components/background/LandingBackground';
 import { CTASection } from '@/components/CTA/CTASection';
+import Features from '@/components/Feature/Feature';
 import Footer from '@/components/Footer/Footer';
 import { Navbar } from '@/components/layout/navbar';
 import { Hero } from '@/components/sections/hero';
@@ -24,6 +25,7 @@ export default function HomePage() {
       <Navbar />
       <Hero />
       <TrustedBy />
+      <Features />
       <StatsSection />
       <CTASection />
       <Footer />
